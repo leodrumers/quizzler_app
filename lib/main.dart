@@ -28,7 +28,6 @@ class QuizzerPage extends StatefulWidget {
 }
 
 class _QuizzerPageState extends State<QuizzerPage> {
-  List<Icon> scoreKeeper = [];
   int correctAnswers = 0;
   Future<QuizBrain> quizBrain;
 
@@ -50,12 +49,6 @@ class _QuizzerPageState extends State<QuizzerPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 8.0),
-                  child: Wrap(
-                    children: scoreKeeper,
-                  ),
-                ),
                 Expanded(
                   flex: 2,
                   child: Padding(
@@ -134,15 +127,11 @@ class _QuizzerPageState extends State<QuizzerPage> {
   void checkAnswer(bool answerSelected, BuildContext context, QuizBrain data) {
     var questionAnswer = data.getAnswers();
     if (questionAnswer == answerSelected) {
-      scoreKeeper.add(Icon(Icons.check, color: Colors.green));
       correctAnswers++;
-    } else {
-      scoreKeeper.add(Icon(Icons.close, color: Colors.red));
     }
     if (data.isLastQuestion()) {
       _quizFinishedDialog(context, data);
       data.restartGame();
-      scoreKeeper.clear();
       correctAnswers = 0;
     } else {
       data.nextQuestion();

@@ -16,7 +16,8 @@ class Question {
     String question = htmlText
         .replaceAll('%20', ' ')
         .replaceAll('%27', '\'')
-        .replaceAll('%2C', ',');
+        .replaceAll('%2C', ',')
+        .replaceAll('%22', '"');
     print('question:\t$question, \n\t$htmlText\n\t$answer');
     return Question(question: question, answer: answer);
   }
