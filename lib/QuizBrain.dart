@@ -2,30 +2,26 @@ import 'Question.dart';
 
 class QuizBrain {
   int _questionNumber = 0;
-  List<Question> _questionBank = [
-    Question('French is an official language in Canada.', false),
-    Question('Tetris is the #1 best-selling video game of all-time.', false),
-    Question('The color orange is named after the fruit.', false),
-    Question('The flag of South Africa features 7 colours.', false),
-    Question('Shrimp can swim backwards.', true),
-  ];
+  final List<Question> questionBank;
+
+  QuizBrain({this.questionBank});
 
   void nextQuestion() {
-    if (_questionNumber < _questionBank.length - 1) {
+    if (_questionNumber < questionBank.length - 1) {
       _questionNumber++;
     }
   }
 
   bool isLastQuestion() {
-    return _questionNumber == _questionBank.length - 1;
+    return _questionNumber == questionBank.length - 1;
   }
 
   String getQuestion() {
-    return _questionBank[_questionNumber].question;
+    return questionBank[_questionNumber].question;
   }
 
   bool getAnswers() {
-    return _questionBank[_questionNumber].answer;
+    return questionBank[_questionNumber].answer;
   }
 
   void restartGame() {
@@ -33,6 +29,16 @@ class QuizBrain {
   }
 
   int totalQuestions() {
-    return _questionBank.length;
+    return questionBank.length;
+  }
+
+  factory QuizBrain.fromJson(Map<String, dynamic> parsedJson) {
+    var list = parsedJson['results'] as List;
+    List<Question> questionList =
+        list.map((i) => Question.fromJson(i)).toList();
+    // print('Question list: ${questionList.first.question}');
+    return QuizBrain(
+      questionBank: questionList,
+    );
   }
 }
